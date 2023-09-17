@@ -5,18 +5,26 @@ import Image from "next/image"
 import * as React from "react"
 import { Badge } from "../ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
+import { buttonVariants } from "../ui/button"
 
 const JobItem = () => {
   return (
     <li>
-      <Link href="/" className="group">
+      <Link
+        href="/view"
+        className="group rounded-xl focus-visible:ring-1 focus-visible:ring-ring"
+      >
         <Card>
           <CardContent className="pt-3">
             <div className="flex flex-col gap-3.5">
               <div className="flex justify-between gap-2.5">
                 <div className="flex items-center gap-3.5 max-[575px]:flex-col max-[575px]:items-start">
                   <div className="relative flex h-14 w-14 items-center">
-                    <Image src="/" fill alt="" />
+                    <Image
+                      src="https://workaron.com/_astro/sli-consulting-inc.2edd7740_1YM3he.webp"
+                      fill
+                      alt=""
+                    />
                   </div>
                   <div className="flex flex-col">
                     <div className="flex gap-3.5">

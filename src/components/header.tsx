@@ -3,6 +3,16 @@
 import Link from "next/link"
 import * as React from "react"
 import { Button, buttonVariants } from "./ui/button"
+import { Toggle } from "./ui/toggle"
+import { DropdownMenuIcon, HamburgerMenuIcon } from "@radix-ui/react-icons"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default function Header() {
   return (
@@ -22,17 +32,17 @@ export default function Header() {
               <ul className="flex gap-3">
                 <li>
                   <Link
-                    href=""
+                    href="/jobs"
                     className="text-sm text-muted-foreground/70 transition-colors hover:text-muted-foreground/80"
                   >
-                    Jobs
+                    Find Jobs
                   </Link>
                 </li>
               </ul>
             </div>
           </nav>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="hidden items-center gap-2 md:flex">
           <Link className={buttonVariants()} href="/login">
             Sign in
           </Link>
@@ -45,6 +55,34 @@ export default function Header() {
             Employers/Post Job
           </Link>
         </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="block md:hidden">
+              <HamburgerMenuIcon />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="mr-2">
+            <DropdownMenuItem>
+              <Link href="/">Find Jobs</Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link className={buttonVariants()} href="/login">
+                Sign in
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link
+                href="/"
+                className={buttonVariants({
+                  variant: "ghost",
+                })}
+              >
+                Employers/Post Job
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   )
