@@ -43,7 +43,9 @@ const JobItem = () => {
                 <Badge>Metro Manila, Quezon City</Badge>
                 <Badge>Onsite</Badge>
                 <Badge>Full-time</Badge>
+                <Badge>Day Shift</Badge>
                 <Badge>5+ Years Experience</Badge>
+                <Badge>₱10, 000 - ₱20, 000</Badge>
               </div>
             </div>
           </CardContent>

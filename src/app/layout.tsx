@@ -1,9 +1,15 @@
 import Header from "@/components/header"
 import "./globals.css"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter as FontSans } from "next/font/google"
+import SiteFooter from "@/components/site-footer"
+import { cn } from "@/lib/utils"
+import ThemeProvider from "@/components/theme-provider"
 
-const inter = Inter({ subsets: ["latin"] })
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,11 +22,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <h1 className="sr-only">Just Work</h1>
-        <Header />
-        <main>{children}</main>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn("min-h-screen font-sans antialiased", fontSans.variable)}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <h1 className="sr-only">Just Work</h1>
+          <Header />
+          <main>{children}</main>
+          <SiteFooter />
+        </ThemeProvider>
       </body>
     </html>
   )

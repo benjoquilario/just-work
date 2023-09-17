@@ -4,10 +4,11 @@ import { ArrowLeftIcon } from "@radix-ui/react-icons"
 import React from "react"
 import { buttonVariants } from "@/components/ui/button"
 import JobItem from "@/components/shared/job-item"
+import Container from "@/components/shared/container"
 
 const ViewPage = () => {
   return (
-    <div className="mx-auto w-full max-w-5xl px-2">
+    <Container className="px-3">
       <div className="flex flex-col gap-3.5">
         <div>
           <Link
@@ -81,7 +82,7 @@ const ViewPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }
 

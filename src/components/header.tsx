@@ -3,8 +3,7 @@
 import Link from "next/link"
 import * as React from "react"
 import { Button, buttonVariants } from "./ui/button"
-import { Toggle } from "./ui/toggle"
-import { DropdownMenuIcon, HamburgerMenuIcon } from "@radix-ui/react-icons"
+import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,11 +12,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Container from "./shared/container"
+import ThemeToggle from "./theme-toggle"
 
 export default function Header() {
   return (
-    <header className="mb-6 flex w-full items-center justify-center pb-6">
-      <div className="mx-0 flex w-full max-w-5xl items-center justify-between p-2">
+    <header className="mb-4 flex w-full items-center justify-center pb-4">
+      <Container className="max-0 flex items-center justify-between p-3">
         <Link
           href="/"
           className="font-logo relative z-10 text-3xl font-extrabold underline decoration-primary decoration-double md:text-5xl"
@@ -33,7 +34,7 @@ export default function Header() {
                 <li>
                   <Link
                     href="/jobs"
-                    className="text-sm text-muted-foreground/70 transition-colors hover:text-muted-foreground/80"
+                    className="text-sm text-muted-foreground/70 transition-colors hover:text-muted-foreground/90"
                   >
                     Find Jobs
                   </Link>
@@ -43,47 +44,64 @@ export default function Header() {
           </nav>
         </div>
         <div className="hidden items-center gap-2 md:flex">
-          <Link className={buttonVariants()} href="/login">
+          <Link className={buttonVariants()} href="/auth/login">
             Sign in
           </Link>
           <Link
-            href="/"
+            href="/post-a-job"
             className={buttonVariants({
               variant: "ghost",
             })}
           >
             Employers/Post Job
           </Link>
+          <ThemeToggle />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="block md:hidden">
-              <HamburgerMenuIcon />
+              <HamburgerMenuIcon className="h-6 w-6" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mr-2">
-            <DropdownMenuItem>
-              <Link href="/">Find Jobs</Link>
+            <DropdownMenuItem asChild>
+              <div>
+                <Link href="/" className="w-full">
+                  Find Jobs
+                </Link>
+              </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link className={buttonVariants()} href="/login">
-                Sign in
-              </Link>
+            <DropdownMenuItem className="hover:bg-transparent">
+              <div className="hover:bg-transparent">
+                <Link
+                  className={buttonVariants({ className: "w-full" })}
+                  href="/auth/login"
+                >
+                  Sign in
+                </Link>
+              </div>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link
-                href="/"
-                className={buttonVariants({
-                  variant: "ghost",
-                })}
-              >
-                Employers/Post Job
-              </Link>
+            <DropdownMenuItem asChild>
+              <div className="hover:bg-transparent">
+                <Link
+                  href="/post-a-job"
+                  className={buttonVariants({
+                    variant: "ghost",
+                  })}
+                >
+                  Employers/Post Job
+                </Link>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <div>
+                <ThemeToggle />
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
+      </Container>
     </header>
   )
 }
