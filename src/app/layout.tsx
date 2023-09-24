@@ -1,8 +1,6 @@
-import Header from "@/components/header"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Inter as FontSans } from "next/font/google"
-import SiteFooter from "@/components/site-footer"
 import { cn } from "@/lib/utils"
 import ThemeProvider from "@/components/theme-provider"
 
@@ -28,9 +26,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <h1 className="sr-only">Just Work</h1>
-          <Header />
-          <main>{children}</main>
-          <SiteFooter />
+          {children}
         </ThemeProvider>
       </body>
     </html>

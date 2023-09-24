@@ -60,3 +60,9 @@
       "calt" 1;
   }
 }
+
+.ql-toolbar.ql-snow,
+.ql-container.ql-snow {
+  border: 1px solid hsl(var(--input)) !important;
+  border-radius: 2px;
+}
