@@ -11,12 +11,11 @@ export const jobPostSchema = z.object({
   employeesNumber: z.string().optional(),
   jobType: z.string(),
   schedule: z.string(),
-  minimumSalary: z.number().optional(),
-  maximumSalary: z.number().optional(),
-  qualification: z.string(),
+  minimumSalary: z.string().optional(),
+  maximumSalary: z.string().optional(),
   sendEmail: z.string().email().toLowerCase().optional(),
   companySite: z.string().url().optional(),
-  companyLogo: z.string(),
+  companyLogo: z.string().optional(),
   location: z
     .string()
     .trim()

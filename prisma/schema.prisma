@@ -56,8 +56,8 @@ model JobPost {
   location        String?
   experience      String
   sendEmail       String? @unique
-  minimumSalary   Int?
-  maximumSalary   Int?
+  minimumSalary   String?
+  maximumSalary   String?
   qualification   String?
   jobType         String
   schedule        String?

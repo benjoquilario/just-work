@@ -5,12 +5,12 @@ import { useMemo } from "react"
 
 import "react-quill/dist/quill.snow.css"
 
-// interface EditorProps {
-//   onChange: (value: string) => void
-//   value: string
-// }
+type EditorProps = {
+  onChange: (value: string) => void
+  value: string
+}
 
-export const Editor = () => {
+export function Editor({ onChange, value }: EditorProps) {
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
@@ -18,7 +18,7 @@ export const Editor = () => {
 
   return (
     <div className="bg-transparent">
-      <ReactQuill theme="snow" />
+      <ReactQuill value={value} onChange={onChange} theme="snow" />
     </div>
   )
 }

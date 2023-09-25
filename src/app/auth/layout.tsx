@@ -1,12 +1,18 @@
 import Layout from "@/components/layout"
 import Container from "@/components/shared/container"
+import { getSession } from "@/lib/session"
+import { redirect } from "next/navigation"
 import React from "react"
 
 type AuthLayoutProps = {
   children: React.ReactNode
 }
 
-export default function AuthLayout({ children }: AuthLayoutProps) {
+export default async function AuthLayout({ children }: AuthLayoutProps) {
+  const session = await getSession()
+
+  if (session) redirect("/")
+
   return (
     <Layout
       isHeader={false}

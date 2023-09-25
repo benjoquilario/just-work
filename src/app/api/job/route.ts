@@ -1,15 +1,23 @@
 import { jobPostSchema } from "@/lib/validations/job"
 import db from "@/lib/db"
 import { NextResponse } from "next/server"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 export async function POST(req: Request) {
   try {
+    const session = await getServerSession(authOptions)
     const body = await req.json()
+
+    if (!session) {
+      return new Response("Unauthorized", { status: 403 })
+    }
+
+    const { user } = session
 
     const {
       companyName,
       companySite,
-      companyLogo,
       description,
       location,
       jobType,
@@ -17,28 +25,41 @@ export async function POST(req: Request) {
       sendEmail,
       maximumSalary,
       minimumSalary,
-      qualification,
       experience,
       schedule,
+      phoneNumber,
+      employeesNumber,
     } = jobPostSchema.parse(body)
+
+    if (!user?.email) return null
+
+    const currentUser = await db.user.findUnique({
+      where: { email: user.email },
+    })
+
+    if (!currentUser) return null
 
     const createJobPost = await db.jobPost.create({
       data: {
         companyName,
         companySite,
-        companyLogo,
+        companyLogo:
+          "https://workaron.com/_astro/a7-recruitment-corporation.5aa593f2_ag5lw.webp",
         description,
-        phoneNumber: "09063251198",
-        employeesNumber: "10+",
+        phoneNumber,
+        employeesNumber,
         location,
         jobType,
         jobTitle,
         sendEmail,
-        qualification,
         experience,
         schedule,
         maximumSalary,
         minimumSalary,
+        userId: currentUser.id,
+      },
+      include: {
+        user: true,
       },
     })
 
