@@ -32,10 +32,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { jobPostSchema } from "@/lib/validations/job"
 import type { JobPost } from "@/lib/validations/job"
 import React, { useEffect, useState } from "react"
-import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
-import { UploadButton, Uploader } from "@/lib/uploadthing"
-import { FileUpload } from "@/components/file-upload"
+import { uploadPicture } from "@/lib/cloudinary"
 
 const JobPost = () => {
   const router = useRouter()
@@ -45,45 +43,60 @@ const JobPost = () => {
   })
   const [checkSalary, setCheckSalary] = useState<boolean>(false)
 
-  const { isSubmitting } = form.formState
+  const { isSubmitSuccessful, isSubmitting } = form.formState
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      form.reset()
+    }
+  }, [isSubmitSuccessful, form.reset])
 
   async function handleOnSubmit(data: JobPost) {
-    const response = await fetch("/api/job", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        companyName: data.companyName,
-        companySite: data.companySite,
-        location: data.location,
-        companyLogo: data.companyLogo,
-        jobTitle: data.jobTitle,
-        employeesNumber: data.employeesNumber,
-        sendEmail: data.sendEmail,
-        experience: data.experience,
-        phoneNumber: data.phoneNumber,
-        minumumSalary: data.minimumSalary,
-        maximumSalaray: data.maximumSalary,
-        schedule: data.schedule,
-        jobType: data.jobType,
-        description: data.description,
-      }),
-    })
+    const imageUrl = await uploadPicture(data.companyLogo as File)
 
-    if (!response?.ok) {
+    if (imageUrl) {
+      const response = await fetch("/api/job", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          companyName: data.companyName,
+          companySite: data.companySite,
+          location: data.location,
+          companyLogo: imageUrl,
+          jobTitle: data.jobTitle,
+          employeesNumber: data.employeesNumber,
+          sendEmail: data.sendEmail,
+          experience: data.experience,
+          phoneNumber: data.phoneNumber,
+          minumumSalary: data.minimumSalary,
+          maximumSalaray: data.maximumSalary,
+          schedule: data.schedule,
+          jobType: data.jobType,
+          description: data.description,
+        }),
+      })
+
+      if (!response?.ok) {
+        return toast({
+          title: "Something went wrong.",
+          description: "Your post was not saved. Please try again.",
+          variant: "destructive",
+        })
+      }
+
+      router.push("/")
+
       return toast({
-        title: "Something went wrong.",
-        description: "Your post was not saved. Please try again.",
+        title: "Job Post successful",
+      })
+    } else {
+      return toast({
+        title: "Company Logo is required",
         variant: "destructive",
       })
     }
-
-    router.push("/")
-
-    return toast({
-      title: "Job Post successful",
-    })
   }
 
   return (
@@ -116,22 +129,25 @@ const JobPost = () => {
                   </FormItem>
                 )}
               />
-              <UploadButton
-                endpoint="logoUploader"
-                onClientUploadComplete={(res) => {
-                  console.log("Files: ", res)
-                }}
-              />
               <FormField
                 control={form.control}
                 name="companyLogo"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Company Name <span className="text-destructive">*</span>
+                      Company Logo <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input type="file" disabled={isSubmitting} {...field} />
+                      <Input
+                        accept=".jpg, .jpeg, .png, .svg, .webp"
+                        type="file"
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.files ? e.target.files[0] : null
+                          )
+                        }
+                        disabled={isSubmitting}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -281,6 +297,7 @@ const JobPost = () => {
                       <SelectContent>
                         <SelectGroup>
                           <SelectLabel>Select an experience</SelectLabel>
+                          <SelectItem value="no">No Experience</SelectItem>
                           {["1", "2+", "5+", "10+"].map((experience) => (
                             <SelectItem key={experience} value={experience}>
                               {experience} years of experience
@@ -368,7 +385,7 @@ const JobPost = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Experience
+                      Work Arrangement
                       <span className="text-destructive">*</span>
                     </FormLabel>
                     <Select
@@ -401,7 +418,7 @@ const JobPost = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Experience
+                      Job Type
                       <span className="text-destructive">*</span>
                     </FormLabel>
                     <Select

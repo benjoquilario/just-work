@@ -5,6 +5,7 @@ import { Inter as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils"
 import ThemeProvider from "@/components/theme-provider"
 import AuthContext from "@/components/auth-context"
+import { Toaster } from "@/components/ui/toaster"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
           <AuthContext>
             <h1 className="sr-only">Just Work</h1>
             {children}
+            <Toaster />
           </AuthContext>
         </ThemeProvider>
       </body>

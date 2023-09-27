@@ -22,6 +22,7 @@ export async function POST(req: Request) {
       location,
       jobType,
       jobTitle,
+      companyLogo,
       sendEmail,
       maximumSalary,
       minimumSalary,
@@ -43,8 +44,7 @@ export async function POST(req: Request) {
       data: {
         companyName,
         companySite,
-        companyLogo:
-          "https://workaron.com/_astro/a7-recruitment-corporation.5aa593f2_ag5lw.webp",
+        companyLogo,
         description,
         phoneNumber,
         employeesNumber,

@@ -13,9 +13,17 @@ export const jobPostSchema = z.object({
   schedule: z.string(),
   minimumSalary: z.string().optional(),
   maximumSalary: z.string().optional(),
-  sendEmail: z.string().email().toLowerCase().optional(),
-  companySite: z.string().url().optional(),
-  companyLogo: z.string().optional(),
+  sendEmail: z
+    .string()
+    .email({ message: "Invalid email" })
+    .toLowerCase()
+    .optional(),
+  companySite: z
+    .string()
+    .url({ message: "Invalid url make sure there is https://" })
+    .optional(),
+  // Can't solve type for File
+  companyLogo: z.any(),
   location: z
     .string()
     .trim()
