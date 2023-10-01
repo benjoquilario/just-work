@@ -49,7 +49,7 @@ const JobPost = () => {
     if (isSubmitSuccessful) {
       form.reset()
     }
-  }, [isSubmitSuccessful, form.reset])
+  }, [isSubmitSuccessful, form])
 
   async function handleOnSubmit(data: JobPost) {
     const imageUrl = await uploadPicture(data.companyLogo as File)
