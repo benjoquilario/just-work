@@ -1,7 +1,6 @@
 import { jobPostSchema } from "@/lib/validations/job"
 import db from "@/lib/db"
 import { NextResponse } from "next/server"
-import { getCurrentUser } from "@/lib/current-user"
 
 export async function POST(req: Request) {
   try {
@@ -20,7 +19,6 @@ export async function POST(req: Request) {
       minimumSalary,
       experience,
       schedule,
-      howToApply,
       employeesNumber,
     } = jobPostSchema.parse(body)
 
@@ -32,7 +30,6 @@ export async function POST(req: Request) {
         companySite,
         companyLogo,
         description,
-        howToApply,
         employeesNumber,
         location,
         jobType,
@@ -52,18 +49,6 @@ export async function POST(req: Request) {
   }
 }
 
-export async function DELETE(req: Request) {
-  const body = await req.json()
-
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) return NextResponse.json("Unauthorized", { status: 401 })
-
-  await db.review.delete({
-    where: {
-      id: body,
-    },
-  })
-
-  return NextResponse.json("Success", { status: 200 })
+export async function GET() {
+  const jobPost = await db.jobPost.findMany()
 }

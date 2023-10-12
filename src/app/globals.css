@@ -59,6 +59,14 @@
       "rlig" 1,
       "calt" 1;
   }
+
+  .description > ul {
+    @apply ml-6 list-disc;
+  }
+
+  .description > ol {
+    @apply ml-6 list-decimal;
+  }
 }
 
 .ql-toolbar.ql-snow,

@@ -36,7 +36,7 @@ export default function Header() {
               <ul className="flex gap-3">
                 <li>
                   <Link
-                    href="/jobs"
+                    href="/"
                     className="text-sm text-muted-foreground/70 transition-colors hover:text-muted-foreground/90"
                   >
                     Find Jobs
@@ -47,7 +47,7 @@ export default function Header() {
           </nav>
         </div>
 
-        <div className="hidden items-center gap-2 md:grid md:grid-cols-3">
+        <div className="hidden items-center gap-2 md:flex">
           <Link
             href="/post-a-job"
             className={buttonVariants({
@@ -56,17 +56,6 @@ export default function Header() {
           >
             Employers/Post Job
           </Link>
-          {/* {session ? ( */}
-          <Avatar>
-            <AvatarImage src="" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          {/* ) : ( */}
-          <Link className={buttonVariants()} href="/auth/login">
-            Sign in
-          </Link>
-          {/* )} */}
-
           <ThemeToggle />
         </div>
         <DropdownMenu>
@@ -77,32 +66,11 @@ export default function Header() {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mr-2">
             <DropdownMenuItem asChild>
-              <div>
-                <Link href="/" className="w-full">
-                  Find Jobs
-                </Link>
-              </div>
+              <Link href="/" className="w-full">
+                Find Jobs
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            {/* {session ? (
-              <DropdownMenuItem className="hover:bg-transparent">
-                <Avatar>
-                  <AvatarImage src="" alt="@shadcn" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </DropdownMenuItem>
-            ) : ( */}
-            <DropdownMenuItem className="hover:bg-transparent">
-              <div className="hover:bg-transparent">
-                <Link
-                  className={buttonVariants({ className: "w-full" })}
-                  href="/auth/login"
-                >
-                  Sign in
-                </Link>
-              </div>
-            </DropdownMenuItem>
-            {/* )} */}
+
             <DropdownMenuItem asChild>
               <div className="hover:bg-transparent">
                 <Link
@@ -116,9 +84,7 @@ export default function Header() {
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <div>
-                <ThemeToggle />
-              </div>
+              <ThemeToggle />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

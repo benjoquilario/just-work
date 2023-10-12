@@ -2,8 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  experimental: {
+    serverActions: true,
+  },
   images: {
-    domains: ["workaron.com"],
+    domains: ["workaron.com", "res.cloudinary.com"],
   },
 }
 

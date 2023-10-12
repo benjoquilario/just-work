@@ -37,6 +37,7 @@ import { uploadPicture } from "@/lib/cloudinary"
 
 const JobPost = () => {
   const router = useRouter()
+  const [isApplyOpen, setIsApplyOpen] = useState(false)
 
   const form = useForm<JobPost>({
     resolver: zodResolver(jobPostSchema),
@@ -55,7 +56,7 @@ const JobPost = () => {
     const imageUrl = await uploadPicture(data.companyLogo as File)
 
     if (imageUrl) {
-      const response = await fetch("/api/job", {
+      const response = await fetch("/api/review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,12 +70,12 @@ const JobPost = () => {
           employeesNumber: data.employeesNumber,
           sendEmail: data.sendEmail,
           experience: data.experience,
-          phoneNumber: data.phoneNumber,
           minumumSalary: data.minimumSalary,
           maximumSalaray: data.maximumSalary,
           schedule: data.schedule,
           jobType: data.jobType,
           description: data.description,
+          howToApply: data.howToApply,
         }),
       })
 
@@ -86,10 +87,8 @@ const JobPost = () => {
         })
       }
 
-      router.push("/")
-
       return toast({
-        title: "Job Post successful",
+        title: "Form submitted. We will review it and post it after review.",
       })
     } else {
       return toast({
@@ -242,23 +241,7 @@ const JobPost = () => {
                 )}
               />
               <Separator className="my-4" />
-              <FormField
-                control={form.control}
-                name="companySite"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company Website</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={isSubmitting}
-                        placeholder="https://company.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <FormField
                 control={form.control}
                 name="sendEmail"
@@ -310,19 +293,7 @@ const JobPost = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Your Phone Number</FormLabel>
-                    <FormControl>
-                      <Input disabled={isSubmitting} {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <Separator className="my-4" />
               <div className="flex items-center space-x-2">
                 <Checkbox
@@ -458,13 +429,59 @@ const JobPost = () => {
                   </FormItem>
                 )}
               />
-
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  checked={isApplyOpen}
+                  onClick={() => setIsApplyOpen((isApplyOpen) => !isApplyOpen)}
+                  id="apply"
+                />
+                <Label
+                  htmlFor="apply"
+                  className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Use my Career Website(A Valid Url)
+                </Label>
+              </div>
               <div className="flex flex-col">
-                <TypographyH4>How to Apply</TypographyH4>
+                {!isApplyOpen ? (
+                  <>
+                    <TypographyH4>How to Apply</TypographyH4>
+                    <FormField
+                      control={form.control}
+                      name="howToApply"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Editor {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </>
+                ) : (
+                  <FormField
+                    control={form.control}
+                    name="companySite"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Company Website</FormLabel>
+                        <FormControl>
+                          <Input
+                            disabled={isSubmitting}
+                            placeholder="https://company.com"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
               </div>
 
               <Button disabled={isSubmitting} className="mt-3" type="submit">
-                Submit
+                Post Job Now - Start Hiring
               </Button>
             </div>
           </form>

@@ -20,7 +20,6 @@ model User {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  jobPosts        JobPost[]
   accounts        Account[]
 }
 
@@ -38,7 +37,7 @@ model Account {
   id_token        String? @db.String
   session_state   String?
 
-  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)  
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -46,7 +45,6 @@ model Account {
 model JobPost {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
   createdAt       DateTime @default(now())
-  phoneNumber     String?
   jobTitle        String
   companyName     String
   companyLogo     String
@@ -62,7 +60,26 @@ model JobPost {
   jobType         String
   schedule        String?
   language        String[]
+  howToApply      String?
+}
 
-  userId          String @db.ObjectId
-  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)     
+model Review {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime @default(now())
+  jobTitle        String
+  companyName     String
+  companyLogo     String
+  description     String
+  companySite     String?
+  employeesNumber String?
+  location        String?
+  experience      String
+  sendEmail       String? @unique
+  minimumSalary   String?
+  maximumSalary   String?
+  qualification   String?
+  jobType         String
+  schedule        String?
+  language        String[]
+  howToApply      String?
 }

@@ -7,6 +7,7 @@ export const jobPostSchema = z.object({
     .min(2, { message: "Company Name must be 2 or more characters long" }),
   jobTitle: z.string().trim(),
   description: z.string().trim(),
+  howToApply: z.string().trim().optional(),
   experience: z.string(),
   employeesNumber: z.string().optional(),
   jobType: z.string(),
@@ -27,10 +28,7 @@ export const jobPostSchema = z.object({
   location: z
     .string()
     .trim()
-    .min(2, { message: "City must be 2 or more characters long" }),
-  phoneNumber: z
-    .string()
-    .min(10, { message: "Phone numbers are a minimum of 10 digits" })
+    .min(2, { message: "City must be 2 or more characters long" })
     .optional(),
 })
 
