@@ -14,6 +14,8 @@ export default async function Home() {
 
   if (!jobPosts) return <div>Nothing to show here...</div>
 
+  console.log(jobPosts)
+
   return (
     <Layout>
       <Container className="px-3">

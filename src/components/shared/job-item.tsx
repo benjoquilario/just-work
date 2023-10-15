@@ -25,6 +25,7 @@ const JobItem = ({ jobPost }: JobItemProps) => {
                 <div className="flex items-center gap-3.5 max-[575px]:flex-col max-[575px]:items-start">
                   <div className="relative flex h-14 w-14 items-center">
                     <Image
+                      style={{objectFit: 'contain'}}
                       src={jobPost?.companyLogo ?? ""}
                       fill
                       alt={jobPost?.companyName ?? ""}
