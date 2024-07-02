@@ -7,6 +7,8 @@ import { notFound } from "next/navigation"
 import React from "react"
 
 async function getJobPostFromJobId(jobId: string) {
+  "use server"
+
   return await db.jobPost.findUnique({
     where: {
       id: jobId,

@@ -3,11 +3,7 @@ import { Input } from "@/components/ui/input"
 import Container from "@/components/shared/container"
 import * as React from "react"
 import Layout from "@/components/layout"
-import db from "@/lib/db"
-
-async function getAllJobPosts() {
-  return await db.jobPost.findMany()
-}
+import { getAllJobPosts } from "@/lib/metrics"
 
 export default async function Home() {
   const jobPosts = await getAllJobPosts()

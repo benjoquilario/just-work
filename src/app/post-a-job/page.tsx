@@ -87,9 +87,11 @@ const JobPost = () => {
         })
       }
 
-      return toast({
+      toast({
         title: "Form submitted. We will review it and post it after review.",
       })
+
+      router.push("/")
     } else {
       return toast({
         title: "Company Logo is required",
